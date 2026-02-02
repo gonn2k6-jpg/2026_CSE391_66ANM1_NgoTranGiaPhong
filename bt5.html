@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<title>HR Management</title>
+
+<style>
+body {
+    font-family: Arial;
+    background: #f5f5f5;
+}
+
+.container {
+    width: 900px;
+    margin: auto;
+    background: white;
+    padding: 10px;
+}
+
+/* HEADER */
+.header {
+    background: #222;
+    color: white;
+    padding: 10px;
+}
+
+.header span {
+    font-weight: bold;
+}
+
+.header a {
+    color: white;
+    margin-left: 15px;
+    text-decoration: none;
+}
+
+.search {
+    float: right;
+}
+
+.search input {
+    padding: 3px;
+}
+
+/* TABLE */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+th, td {
+    border: 1px solid #ccc;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background: #eee;
+}
+
+.btn-add {
+    float: right;
+    background: #007bff;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+}
+
+.btn-edit {
+    background: orange;
+    border: none;
+    padding: 3px 8px;
+}
+
+.btn-delete {
+    background: red;
+    color: white;
+    border: none;
+    padding: 3px 8px;
+}
+
+/* FORM */
+.form-box {
+    margin-top: 30px;
+    border: 1px solid #007bff;
+}
+
+.form-title {
+    background: #007bff;
+    color: white;
+    padding: 8px;
+}
+
+.form-content {
+    padding: 10px;
+}
+
+.form-content input, 
+.form-content select {
+    width: 95%;
+}
+
+.actions {
+    text-align: right;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- HEADER -->
+    <div class="header">
+        <span>HR Management</span>
+        <a href="#">Home</a>
+        <a href="#">Contact</a>
+
+        <div class="search">
+            <input type="text" placeholder="Search...">
+            <button>Search</button>
+        </div>
+        <div style="clear:both"></div>
+    </div>
+
+    <!-- EMPLOYEE TABLE -->
+    <h3>Employee
+        <button class="btn-add">+ Add</button>
+    </h3>
+
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Position</th>
+            <th>Action</th>
+        </tr>
+
+        <tr>
+            <td>1</td>
+            <td>Fatima Beatriz</td>
+            <td>fatima@gmail.com</td>
+            <td>0985674321</td>
+            <td>Staff</td>
+            <td>
+                <button class="btn-edit">Edit</button>
+                <button class="btn-delete">Delete</button>
+            </td>
+        </tr>
+
+        <tr>
+            <td>2</td>
+            <td>Gabriel Hanna</td>
+            <td>gabriel@gmail.com</td>
+            <td>0356742331</td>
+            <td>Staff</td>
+            <td>
+                <button class="btn-edit">Edit</button>
+                <button class="btn-delete">Delete</button>
+            </td>
+        </tr>
+
+        <tr>
+            <td>3</td>
+            <td>Charles Diya</td>
+            <td>charles@gmail.com</td>
+            <td>0347658833</td>
+            <td>Staff</td>
+            <td>
+                <button class="btn-edit">Edit</button>
+                <button class="btn-delete">Delete</button>
+            </td>
+        </tr>
+    </table>
+
+    <!-- NEW EMPLOYEE FORM -->
+    <div class="form-box">
+        <div class="form-title">New Employee</div>
+
+        <div class="form-content">
+            <form>
+                <table>
+                    <tr>
+                        <td>Name</td>
+                        <td><input type="text"></td>
+                        <td>Email</td>
+                        <td><input type="email"></td>
+                    </tr>
+
+                    <tr>
+                        <td>Phone</td>
+                        <td><input type="text"></td>
+                        <td>Position</td>
+                        <td>
+                            <select>
+                                <option>Select Position</option>
+                                <option>Staff</option>
+                                <option>Manager</option>
+                                <option>CEO</option>
+                            </select>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>Sex</td>
+                        <td colspan="3">
+                            <input type="radio" name="sex"> Male
+                            <input type="radio" name="sex"> Female
+                        </td>
+                    </tr>
+                </table>
+
+                <div class="actions">
+                    <button>Save</button>
+                    <button type="reset">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
