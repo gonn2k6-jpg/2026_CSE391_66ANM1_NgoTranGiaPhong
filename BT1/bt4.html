@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Employee Form</title>
+  <style>
+    :root{
+      --border:#bdbdbd;
+      --border2:#d7d7d7;
+      --text:#111;
+      --muted:#666;
+      --bg:#f6f6f6;
+      --panel:#fff;
+      --legend:#111;
+      --btn:#2c2c2c;
+    }
+    body{
+      margin:0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #fff;
+      color: var(--text);
+    }
+    .wrap{
+      max-width: 780px;
+      margin: 28px auto;
+      padding: 0 18px 28px;
+    }
+    h2{
+      margin: 0 0 14px;
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    /* Fieldset giống ảnh */
+    fieldset{
+      border: 1px solid var(--border);
+      padding: 14px 14px 12px;
+      margin: 0 0 18px;
+      background: var(--panel);
+    }
+    legend{
+      padding: 0 10px;
+      font-weight: 700;
+      color: var(--legend);
+    }
+
+    /* layout giống form trong ảnh: label trái, input phải */
+    .form-table{
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+    }
+    .form-table td{
+      padding: 6px 6px;
+      vertical-align: middle;
+    }
+    .label{
+      width: 170px;
+      color: #000;
+      font-weight: 600;
+      font-size: 13px;
+      white-space: nowrap;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="date"],
+    input[type="tel"],
+    select,
+    textarea{
+      width: 100%;
+      box-sizing: border-box;
+      border: 1px solid var(--border);
+      padding: 6px 8px;
+      font-size: 13px;
+      background: #fff;
+    }
+    input[readonly]{
+      background: #f2f2f2;
+      color:#333;
+    }
+
+    .inline{
+      display:flex;
+      gap:10px;
+      align-items:center;
+      flex-wrap: wrap;
+    }
+    .inline label{
+      font-weight: 500;
+      font-size: 13px;
+      color:#000;
+      display:flex;
+      align-items:center;
+      gap:6px;
+    }
+
+    /* Input có icon như ảnh (datepicker / help) */
+    .input-icon{
+      position: relative;
+    }
+    .input-icon input,
+    .input-icon select{
+      padding-right: 34px;
+    }
+    .icon-btn{
+      position:absolute;
+      right: 6px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 22px;
+      height: 22px;
+      border: 1px solid var(--border2);
+      background: #f7f7f7;
+      color:#333;
+      border-radius: 2px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size: 12px;
+      cursor: pointer;
+      user-select:none;
+    }
+    .icon-btn:active{ transform: translateY(-50%) scale(0.98); }
+
+    /* Notes toolbar đơn giản (mô phỏng WYSIWYG như hình) */
+    .toolbar{
+      display:flex;
+      gap:6px;
+      flex-wrap: wrap;
+      padding: 6px;
+      border: 1px solid var(--border);
+      border-bottom: none;
+      background: #f3f3f3;
+    }
+    .tool{
+      border: 1px solid var(--border2);
+      background:#fff;
+      padding: 3px 6px;
+      font-size: 12px;
+      cursor: pointer;
+      border-radius: 2px;
+    }
+    .tool:hover{ background:#fafafa; }
+    .editor{
+      border: 1px solid var(--border);
+      min-height: 110px;
+      padding: 8px;
+      font-size: 13px;
+      outline: none;
+      background:#fff;
+    }
+
+    /* Optional Info rows */
+    .small{
+      width: 220px;
+      max-width: 100%;
+    }
+    .tiny{
+      width: 140px;
+      max-width: 100%;
+    }
+
+    /* CAPTCHA giống ảnh */
+    .captcha-row{
+      display:flex;
+      align-items:flex-end;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .captcha-box{
+      display:flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .captcha-img{
+      width: 170px;
+      height: 44px;
+      border: 1px solid var(--border);
+      background: repeating-linear-gradient(
+        45deg,
+        #f1f1f1,
+        #f1f1f1 6px,
+        #ffffff 6px,
+        #ffffff 12px
+      );
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight: 800;
+      letter-spacing: 2px;
+      font-size: 18px;
+      user-select:none;
+    }
+    .captcha-change{
+      font-size: 12px;
+      color: #000;
+      text-align:center;
+      cursor:pointer;
+      user-select:none;
+    }
+    .muted{
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    /* Footer buttons giống ảnh */
+    .footer{
+      display:flex;
+      align-items:center;
+      justify-content: space-between;
+      margin-top: 10px;
+      gap: 10px;
+    }
+    .nav-arrows{
+      display:flex;
+      gap: 6px;
+      align-items:center;
+    }
+    .arrow{
+      width: 22px;
+      height: 22px;
+      border: 1px solid var(--border);
+      background:#efefef;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      cursor:pointer;
+      user-select:none;
+    }
+    .actions{
+      display:flex;
+      gap: 10px;
+      align-items:center;
+    }
+    .btn{
+      border: 1px solid #1f1f1f;
+      background: #2f2f2f;
+      color:#fff;
+      padding: 7px 12px;
+      font-size: 13px;
+      cursor:pointer;
+      border-radius: 2px;
+      display:inline-flex;
+      align-items:center;
+      gap: 8px;
+    }
+    .btn.secondary{
+      background:#4a4a4a;
+    }
+    .btn:active{ transform: scale(0.99); }
+
+    .required-note{
+      margin-top: 8px;
+      font-size: 12px;
+      color:#000;
+    }
+
+    /* đường gạch mảnh giống ảnh */
+    .divider{
+      height: 1px;
+      background: var(--border2);
+      margin: 4px 0 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <h2>Employee Information</h2>
+
+    <form id="empForm" action="#" method="post" novalidate>
+      <!-- BASIC INFO -->
+      <fieldset>
+        <legend>Basic Info</legend>
+
+        <table class="form-table" aria-label="Basic Info">
+          <tr>
+            <td class="label">Employee ID</td>
+            <td><input type="text" name="employeeId" value="9" readonly></td>
+          </tr>
+
+          <tr>
+            <td class="label">Last Name</td>
+            <td><input type="text" name="lastName" value="Dodsworth" required></td>
+          </tr>
+
+          <tr>
+            <td class="label">First Name</td>
+            <td class="input-icon">
+              <input type="text" name="firstName" value="Anne" required>
+              <span class="icon-btn" title="Lookup">▾</span>
+            </td>
+          </tr>
+
+          <tr>
+            <td class="label">Gender</td>
+            <td>
+              <div class="inline" role="radiogroup" aria-label="Gender">
+                <label><input type="radio" name="gender" value="Male"> Male</label>
+                <label><input type="radio" name="gender" value="Female"> Female</label>
+                <label><input type="radio" name="gender" value="XXX"> XXX</label>
+                <label><input type="radio" name="gender" value="ZZZ" checked> ZZZ</label>
+              </div>
+            </td>
+          </tr>
+
+          <tr>
+            <td class="label">Title</td>
+            <td><input type="text" name="title" value="Sales Representative" required></td>
+          </tr>
+
+          <tr>
+            <td class="label">Suffix</td>
+            <td><input type="text" name="suffix" value="Ms."></td>
+          </tr>
+
+          <tr>
+            <td class="label">BirthDate</td>
+            <td class="input-icon">
+              <input type="date" name="birthDate" value="1969-07-02" required>
+              <span class="icon-btn" title="Calendar">📅</span>
+            </td>
+          </tr>
+
+          <tr>
+            <td class="label">HireDate</td>
+            <td class="input-icon">
+              <input type="date" name="hireDate" value="1994-11-15" required>
+              <span class="icon-btn" title="Calendar">📅</span>
+            </td>
+          </tr>
+
+          <tr>
+            <td class="label">SSN # (if applicable)</td>
+            <td class="input-icon">
+              <input type="text" name="ssn" placeholder="">
+              <span class="icon-btn" title="Help">?</span>
+            </td>
+          </tr>
+
+          <tr>
+            <td class="label">Reports To</td>
+            <td class="input-icon">
+              <select name="reportsTo">
+                <option>Buchanan</option>
+                <option>Davolio</option>
+                <option>Fuller</option>
+                <option>King</option>
+              </select>
+              <span class="icon-btn" title="Select">▾</span>
+            </td>
+          </tr>
+        </table>
+      </fieldset>
+
+      <!-- CONTACT INFO -->
+      <fieldset>
+        <legend>Contact Info</legend>
+
+        <table class="form-table" aria-label="Contact Info">
+          <tr>
+            <td class="label">Email</td>
+            <td><input type="email" name="email" placeholder="name@example.com"></td>
+          </tr>
+
+          <tr>
+            <td class="label">Address</td>
+            <td><input type="text" name="address" value="7 Houndstooth Rd."></td>
+          </tr>
+
+          <tr>
+            <td class="label">City</td>
+            <td><input type="text" name="city" value="London"></td>
+          </tr>
+
+          <tr>
+            <td class="label">Region</td>
+            <td><input type="text" name="region" value=""></td>
+          </tr>
+
+          <tr>
+            <td class="label">Postal Code</td>
+            <td><input type="text" name="postalCode" value="WG2 7LT"></td>
+          </tr>
+
+          <tr>
+            <td class="label">Country</td>
+            <td class="input-icon">
+              <select name="country">
+                <option>Russian Federation</option>
+                <option>Vietnam</option>
+                <option>USA</option>
+                <option>UK</option>
+              </select>
+              <span class="icon-btn" title="Select">▾</span>
+            </td>
+          </tr>
+
+          <tr>
+            <td class="label">US Home Phone</td>
+            <td><input type="tel" name="phone" value="(234)234-2342"></td>
+          </tr>
+
+          <tr>
+            <td class="label">Photo</td>
+            <td><input type="text" name="photo" value="EmpID9.bmp"></td>
+          </tr>
+        </table>
+      </fieldset>
+
+      <!-- OPTIONAL INFO -->
+      <fieldset>
+        <legend>Optional Info</legend>
+
+        <table class="form-table" aria-label="Optional Info">
+          <tr>
+            <td class="label">Notes</td>
+            <td>
+              <div class="toolbar" role="toolbar" aria-label="Notes toolbar">
+                <button class="tool" type="button" data-cmd="bold"><b>B</b></button>
+                <button class="tool" type="button" data-cmd="italic"><i>I</i></button>
+                <button class="tool" type="button" data-cmd="underline"><u>U</u></button>
+                <button class="tool" type="button" data-cmd="insertUnorderedList">• List</button>
+                <button class="tool" type="button" data-cmd="insertOrderedList">1. List</button>
+                <button class="tool" type="button" data-cmd="removeFormat">Clear</button>
+              </div>
+              <div id="notesEditor" class="editor" contenteditable="true" aria-label="Notes editor">
+                Anne has a BA degree in English from St. Lawrence College.<br/>
+                She is fluent in French and German.ZZZ
+              </div>
+              <input type="hidden" name="notes" id="notesHidden" />
+            </td>
+          </tr>
+
+          <tr>
+            <td class="label">Preferred Shift</td>
+            <td>
+              <div class="inline">
+                <label><input type="checkbox" name="shiftRegular"> Regular</label>
+                <label><input type="checkbox" name="shiftGraveyard" checked> Gravy Yard</label>
+              </div>
+            </td>
+          </tr>
+
+          <tr>
+            <td class="label">Active?</td>
+            <td>
+              <label class="inline"><input type="checkbox" name="active" checked> </label>
+            </td>
+          </tr>
+
+          <tr>
+            <td class="label">Are you human?</td>
+            <td>
+              <div class="captcha-row">
+                <div class="captcha-box">
+                  <div id="captchaImg" class="captcha-img" aria-label="captcha image">TIDAWO</div>
+                  <div id="captchaChange" class="captcha-change">Click to change</div>
+                </div>
+                <div style="flex:1; min-width: 220px;">
+                  <input class="small" type="text" name="captcha" placeholder="" required>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </table>
+
+        <div class="footer">
+          <div class="nav-arrows" aria-label="Navigation arrows">
+            <div class="arrow" title="Previous">◀</div>
+            <div class="arrow" title="Next">▶</div>
+          </div>
+
+          <div class="actions">
+            <button class="btn" type="submit">💾 Submit</button>
+            <button class="btn secondary" type="button" id="btnCancel">✖ Cancel</button>
+          </div>
+        </div>
+
+        <div class="required-note"><span class="muted">*</span> required</div>
+      </fieldset>
+    </form>
+  </div>
+
+  <script>
+    // Notes: toolbar commands (mô phỏng editor giống ảnh)
+    const editor = document.getElementById("notesEditor");
+    const hidden = document.getElementById("notesHidden");
+
+    document.querySelectorAll(".tool").forEach(btn => {
+      btn.addEventListener("click", () => {
+        const cmd = btn.dataset.cmd;
+        document.execCommand(cmd, false, null);
+        editor.focus();
+      });
+    });
+
+    // Captcha đổi chữ
+    const captchaImg = document.getElementById("captchaImg");
+    const captchaChange = document.getElementById("captchaChange");
+    function randomCaptcha(len=6){
+      const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
+      let out = "";
+      for(let i=0;i<len;i++) out += chars[Math.floor(Math.random()*chars.length)];
+      return out;
+    }
+    function refreshCaptcha(){
+      captchaImg.textContent = randomCaptcha(6);
+    }
+    captchaImg.addEventListener("click", refreshCaptcha);
+    captchaChange.addEventListener("click", refreshCaptcha);
+
+    // Cancel giống ảnh: reset form + khôi phục notes mẫu
+    document.getElementById("btnCancel").addEventListener("click", () => {
+      document.getElementById("empForm").reset();
+      editor.innerHTML = `Anne has a BA degree in English from St. Lawrence College.<br/>
+                          She is fluent in French and German.ZZZ`;
+      refreshCaptcha();
+    });
+
+    // Submit: đẩy contenteditable -> hidden để backend nhận được
+    document.getElementById("empForm").addEventListener("submit", (e) => {
+      hidden.value = editor.innerHTML;
+      // demo: chặn submit thật để bạn kiểm tra
+      e.preventDefault();
+      alert("Submitted (demo). Notes saved + captcha checked by backend nếu có.");
+    });
+  </script>
+</body>
+</html>
+
