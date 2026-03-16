@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Thực hành Events</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 24px;
+      line-height: 1.6;
+    }
+
+    .box {
+      border: 2px solid #333;
+      padding: 20px;
+      margin: 16px 0;
+    }
+
+    .outer {
+      background: #f8d7da;
+    }
+
+    .inner {
+      background: #d1ecf1;
+      margin-top: 10px;
+    }
+
+    li {
+      cursor: pointer;
+      margin: 6px 0;
+    }
+  </style>
+</head>
+<body>
+  <h1>Thực hành Events</h1>
+
+  <!-- 1. Click event -->
+  <button id="myBtn">Bấm vào tôi</button>
+  <p id="clickResult"></p>
+
+  <!-- 2. Keyboard event -->
+  <input type="text" id="keyboardInput" placeholder="Nhấn phím bất kỳ..." />
+  <p id="keyResult"></p>
+
+  <!-- 3. Submit form -->
+  <form id="myForm">
+    <input type="text" id="nameInput" placeholder="Nhập tên..." required />
+    <button type="submit">Gửi form</button>
+  </form>
+  <p id="formResult"></p>
+
+  <!-- 4. Bubbling -->
+  <div class="box outer" id="outerBox">
+    Outer Box
+    <div class="box inner" id="innerBox">
+      Inner Box
+    </div>
+  </div>
+
+  <!-- 5. Event delegation -->
+  <ul id="todoList">
+    <li>Công việc 1</li>
+    <li>Công việc 2</li>
+    <li>Công việc 3</li>
+  </ul>
+
+  <script src="b1js7.js"></script>
+</body>
+</html>
